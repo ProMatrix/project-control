@@ -1,0 +1,16 @@
+Project Notes:
+project-control is a group of tasks used in the creation of an Angular app.
+These are node tasks used during development
+
+This project contain helper tasks (utilities) for developing Angular applications such as:
+1) Application version and technology versions used in the app
+2) Publishing to NPM after committing to Git
+3) Base64 integration
+
+Before Debugging: Use Build:Watch to interactively make changes while debugging
+
+When do we need to run the ng-packagr?
+You only need to use the ng-packagr when creating a module that will be imported into an Angular application
+such as ngx-modelling
+
+taskNpmPublish: to test, make sure you have a local commit ready to be published

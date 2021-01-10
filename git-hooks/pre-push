@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+"use strict";
+// this git-hook should go in the NgResources\self-control\.git\hooks folder
+require("../../git-hooks/pre-push.js");

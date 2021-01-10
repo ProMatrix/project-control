@@ -1,0 +1,92 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "printTime",
+            "program": "${workspaceFolder}/taskCli.js",
+            "args": [
+                "task=printTime"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+        },
+        {
+            "name": "getConfig",
+            "program": "${workspaceFolder}/taskCli.js",
+            "args": [
+                "task=getConfig", "waitOnCompleted=true", "visualProject=Angular.Fire.Studio.10", "developersSettingsPath=C:\\ProMatrix.2\\Angular.Fire.Studio.10\\developersSettings.json"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+        },
+        {
+            "name": "taskBuild",
+            "program": "${workspaceFolder}/taskCli.js",
+            "args": [
+                "task=taskBuild", "waitOnCompleted=false", "developersSettingsPath=C:\\ProMatrix.2\\Angular.Fire.Studio.10\\developersSettings.json", "synchronous=true"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+        },
+        {
+            "name": "npm ngx-modelling",
+            "program": "${workspaceFolder}/taskCli.js",
+            "args": [
+                "testOnly=false", "task=taskNpmPublish", "npmPackage=ngx-modelling", "branch=npm", "gitFolder=..\\..\\NgResources\\ngx-modelling", "libFolder=library", "pubFolder=projects\\ng2-express\\dist", "workspaces=..\\..\\NgResources\\project-control,..\\..\\NgResources\\ngx-api-services,..\\..\\Angular.Fire.Studio.10\\studio.app", "scriptName=package-ng2-express"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+        },
+        {
+            "name": "npm project-control",
+            "program": "${workspaceFolder}/taskCli.js",
+            "args": [
+                "testOnly=false", "task=taskNpmPublish", "npmPackage=project-control", "branch=npm", "gitFolder=..\\..\\NgResources\\project-control", "libFolder=.\\", "pubFolder=.\\", "workspaces=..\\..\\Angular.Fire.Studio.10\\studio.app", "scriptName="
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+        },
+        {
+            "name": "npm ngx-motion",
+            "program": "${workspaceFolder}/taskCli.js",
+            "args": [
+                "testOnly=false", "task=taskNpmPublish", "npmPackage=ngx-motion", "branch=npm-v9", "gitFolder=..\\..\\NgResources\\ngx-motion", "libFolder=library", "pubFolder=projects\\ng2-express\\dist", "workspaces=..\\..\\Angular.Dot.Net\\AngularNetCore\\wwwroot,..\\..\\Angular.Fire.Studio.10\\studio.app", "scriptName=package-ng2-express"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+        },
+        {
+            "name": "npm ng2-express",
+            "program": "${workspaceFolder}/taskCli.js",
+            "args": [
+                "testOnly=false", "task=taskNpmPublish", "npmPackage=ng2-express", "branch=npm", "gitFolder=..\\..\\NgResources\\ng2-express", "libFolder=library", "pubFolder=projects\\ng2-express\\dist", "workspaces=", "scriptName=package-ng2-express"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+        }
+    ]
+}
