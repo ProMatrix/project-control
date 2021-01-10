@@ -1,4 +1,4 @@
-//import { TaskNpmPublish } from '../../project-control';
+import { TaskNpmPublish } from '../../project-control';
 
 
 export class PrePush {
