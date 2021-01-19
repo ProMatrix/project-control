@@ -19,10 +19,10 @@ export class CommonTasks {
   private appsettingsPath = '';
   private packageJsonPath = '';
   private appVersionsPath = '';
-  setAppSettingsPath(appFolder: string, workspaceFolder: string){
+  setAppSettingsPath(appFolder: string, workspaceFolder: string) {
     this.appsettingsPath = workspaceFolder + '\\appsettings.json';
     this.packageJsonPath = appFolder + '\\package.json';
-    this.appVersionsPath  = appFolder + '\\resources\\libraries\\appversions.ts';
+    this.appVersionsPath = appFolder + '\\resources\\libraries\\appversions.ts';
   }
 
   getProjectSettings(): ProjectSettings {
@@ -106,16 +106,17 @@ export class CommonTasks {
 
   setApiVersions(apiVersions: ApiVersions) {
     // changing a JavaScript object to a string equivalent
-    if (fs.existsSync(this.appVersionsPath)) {
-      let apiVersionsString = this.objToString(apiVersions);
-      let jsonString = JSON.stringify(apiVersions);
-      apiVersionsString = apiVersionsString.split('class').join('const');
-      apiVersionsString = apiVersionsString.split(' =').join(':');
-      apiVersionsString = apiVersionsString.split(';').join(',');
-      apiVersionsString = apiVersionsString.split('ApiVersions').join('apiVersions =');
-      apiVersionsString += ';\n';
-      fs.writeFileSync(this.appVersionsPath, apiVersionsString);
-    }    
+    if (!fs.existsSync(this.appVersionsPath)) {
+      throw new Error('apiVersions file is missing!');
+    }
+    let apiVersionsString = this.objToString(apiVersions);
+    let jsonString = JSON.stringify(apiVersions);
+    apiVersionsString = apiVersionsString.split('class').join('const');
+    apiVersionsString = apiVersionsString.split(' =').join(':');
+    apiVersionsString = apiVersionsString.split(';').join(',');
+    apiVersionsString = apiVersionsString.split('ApiVersions').join('apiVersions =');
+    apiVersionsString += ';\n';
+    fs.writeFileSync(this.appVersionsPath, apiVersionsString);
   }
 
   private getDependency(obj: object, key: string): string {
