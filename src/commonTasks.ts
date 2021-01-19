@@ -84,6 +84,8 @@ export class CommonTasks {
     apiVersions.coreJs = this.getDependency(dependencies, 'core-js');
     apiVersions.zoneJs = this.getDependency(dependencies, 'zone.js');
     apiVersions.googleMaps = this.getDependency(dependencies, '@types/google-maps');
+    apiVersions.firebase = this.getDependency(dependencies, 'firebase');
+    apiVersions.angularFire = this.getDependency(dependencies, '@angular/fire');
   }
 
   getInstalledDevDependencies(apiVersions: ApiVersions) {
