@@ -26,7 +26,7 @@ export class Versioning {
         return packageJson.version;
     }
 
-    updateVersions(appVersionType: string): string {
+    updateVersions(): string {
         const buildVersion = this.updatePackageVersion();
         const apiVersions: ApiVersions = this.ct.getApiVersions();
         apiVersions.nodeJs = process.versions.node;
