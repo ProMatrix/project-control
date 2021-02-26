@@ -33,13 +33,6 @@ export class Versioning {
         apiVersions.v8Engine = process.versions.v8;
         apiVersions.buildVersion = buildVersion;
         this.ct.setApiVersions(apiVersions);
-
-        if (appVersionType === 'appSettings') {
-            const appSettings: AppSettings = this.ct.getAppSettings();
-            appSettings.apiVersions = apiVersions;
-            appSettings.buildVersion = buildVersion;
-            this.ct.setAppSettings(appSettings);
-        }
         return buildVersion;
     }
 }

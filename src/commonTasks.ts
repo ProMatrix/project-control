@@ -16,11 +16,10 @@ export class CommonTasks {
   private cl = new ColoredLogger();
   private buildTime = new BuildTime();
   private cli = new CommandLine();
-  private appsettingsPath = '';
   private packageJsonPath = '';
   private appVersionsPath = '';
-  setAppSettingsPath(appFolder: string, workspaceFolder: string) {
-    this.appsettingsPath = workspaceFolder + '\\appsettings.json';
+
+  setAppSettingsPath(appFolder: string) {
     this.packageJsonPath = appFolder + '\\package.json';
     this.appVersionsPath = appFolder + '\\libs\\features\\src\\resources\\libraries\\appversions.ts';
   }
@@ -38,27 +37,6 @@ export class CommonTasks {
     const cwd = process.cwd();
     const projectSettingsString = JSON.stringify(projectSettings, null, 2);
     fs.writeFileSync(cwd + '/projectSettings.json', projectSettingsString);
-  }
-
-  getAppSettings(): AppSettings {
-    if (!fs.existsSync(this.appsettingsPath)) {
-      throw new Error('Error: appsettingsPath is missing!')
-    }
-
-    let appsettings = fs.readFileSync(this.appsettingsPath).toString();
-    if (appsettings.charCodeAt(0) === 0xFEFF) {
-      appsettings = appsettings.substring(1, appsettings.length);
-    }
-    const json = JSON.parse(appsettings);
-    return json.appSettings;
-  }
-
-  setAppSettings(appSettings: AppSettings) {
-    if (!fs.existsSync(this.appsettingsPath)) {
-      return;
-    }
-    const newSettings = '{  \"appSettings\":   ' + JSON.stringify(appSettings, null, 2) + '}';
-    fs.writeFileSync(this.appsettingsPath, newSettings);
   }
 
   getPackageJson(): PackageJson {
@@ -151,17 +129,6 @@ export class CommonTasks {
     const d = new Date();
     const t = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ':' + d.getMilliseconds();
     this.cl.printSuccess(`TIME: ${t}`);
-  }
-
-  printVersion() {
-    const rt = this.getAppSettings();
-    const vn = rt.buildVersion;
-    this.cl.printSuccess(`VERSION: ${vn}`);
-  }
-
-  getVersion(): string {
-    const rt = this.getAppSettings();
-    return rt.buildVersion;
   }
 
   removeDirectory(directory: string) {
