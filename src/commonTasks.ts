@@ -21,7 +21,7 @@ export class CommonTasks {
 
   setAppSettingsPath(appFolder: string) {
     this.packageJsonPath = appFolder + '\\package.json';
-    this.appVersionsPath = appFolder + '\\libs\\features\\src\\resources\\libraries\\appversions.ts';
+    this.appVersionsPath = appFolder + '\\libs\\essentials\\src\\resources\\libraries\\appversions.ts';
   }
 
   getProjectSettings(): ProjectSettings {
