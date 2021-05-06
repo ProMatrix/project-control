@@ -59,9 +59,6 @@ export class CommonTasks {
     const dependencies = JSON.parse(jsonString).dependencies;
     apiVersions.rxJs = this.getDependency(dependencies, 'rxjs');
     apiVersions.moment = this.getDependency(dependencies, 'moment');
-    apiVersions.coreJs = this.getDependency(dependencies, 'core-js');
-    apiVersions.zoneJs = this.getDependency(dependencies, 'zone.js');
-    apiVersions.googleMaps = this.getDependency(dependencies, '@types/google-maps');
     apiVersions.firebase = this.getDependency(dependencies, 'firebase');
     apiVersions.angularFire = this.getDependency(dependencies, '@angular/fire');
   }
