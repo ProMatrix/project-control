@@ -123,14 +123,14 @@ export class TaskBase {
     const developerSettings = this.getDeveloperSettings();
 
     if (developerSettings) {
-      let developerSettingsPath = process.cwd();
-      if (developerSettingsPath.indexOf('\\') !== -1) {
-        developerSettingsPath = developerSettingsPath.substr(0, developerSettingsPath.lastIndexOf('\\'));
+      let name = process.cwd();
+      if (name.indexOf('\\') !== -1) {
+        name = name.substr(0, name.lastIndexOf('\\'));
       } else { // MacOs
-        developerSettingsPath = developerSettingsPath.substr(0, developerSettingsPath.lastIndexOf('/'));
+        name = name.substr(0, name.lastIndexOf('/'));
       }
       bc.visualProject = {
-        developerSettingsPath,
+        name,
         developerSettings,
         showPanel: false,
         showVersion: true
