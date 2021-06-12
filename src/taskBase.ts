@@ -45,7 +45,7 @@ export class TaskBase {
 
   saveDeveloperSettings(ds: DeveloperSettings) {
     // allow for an array of developerSettings for more than 1 developer
-    let dss = new Array <DeveloperSettings>();
+    let dss = new Array<DeveloperSettings>();
     dss.push(ds);
     fs.writeFileSync(this.developersSettingsPath, JSON.stringify(dss, null, 2));
   }
@@ -85,8 +85,8 @@ export class TaskBase {
     if (!developerSettings) {
       developerSettings = developersSettings.find(x => (x.machineName === 'ANONYMOUS DEVELOPERS MACHINE NAME'));
     }
-    if(!developerSettings){
-      return null;      
+    if (!developerSettings) {
+      return null;
     }
     return developerSettings;
   }
@@ -96,8 +96,8 @@ export class TaskBase {
       return new NgWorkspace();
     }
     const ds = this.getDeveloperSettings();
-    if(!ds){
-      return new NgWorkspace();     
+    if (!ds) {
+      return new NgWorkspace();
     }
     const ngWorkspacePath = ds.appFolder + '\\angular.json';
     if (!fs.existsSync(ngWorkspacePath)) {
@@ -106,10 +106,10 @@ export class TaskBase {
 
     const s = fs.readFileSync(ngWorkspacePath);
     const ngWorkspace = JSON.parse(fs.readFileSync(ngWorkspacePath).toString()) as NgWorkspace;
-    if(ngWorkspace){
+    if (ngWorkspace) {
       return ngWorkspace;
-    }else{
-       return new NgWorkspace();   
+    } else {
+      return new NgWorkspace();
     }
   }
 
@@ -123,9 +123,14 @@ export class TaskBase {
     const developerSettings = this.getDeveloperSettings();
 
     if (developerSettings) {
-      const name = developerSettings.workspaceFolder.substr(developerSettings.workspaceFolder.lastIndexOf('\\') + 1);
+      let developerSettingsPath = process.cwd();
+      if (developerSettingsPath.indexOf('\\') !== -1) {
+        developerSettingsPath = developerSettingsPath.substr(0, developerSettingsPath.lastIndexOf('\\'));
+      } else {
+        developerSettingsPath = developerSettingsPath.substr(0, developerSettingsPath.lastIndexOf('/'));
+      }
       bc.visualProject = {
-        name,
+        developerSettingsPath,
         developerSettings,
         showPanel: false,
         showVersion: true
