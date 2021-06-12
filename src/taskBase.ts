@@ -126,7 +126,7 @@ export class TaskBase {
       let developerSettingsPath = process.cwd();
       if (developerSettingsPath.indexOf('\\') !== -1) {
         developerSettingsPath = developerSettingsPath.substr(0, developerSettingsPath.lastIndexOf('\\'));
-      } else {
+      } else { // MacOs
         developerSettingsPath = developerSettingsPath.substr(0, developerSettingsPath.lastIndexOf('/'));
       }
       bc.visualProject = {
