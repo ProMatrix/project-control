@@ -46,7 +46,13 @@ export class TaskConfig extends TaskBase {
   }
 
   getBuildVersion(): PackageJson {
-    let packageJsonString = fs.readFileSync(this.bc.visualProject.developerSettings.appFolder + '\\package.json').toString();
+    let packagePath = process.cwd();
+    if (packagePath.indexOf('\\') !== -1) {
+      packagePath += '\\package.json';
+    } else {
+      packagePath += '/package.json';      
+    }
+    let packageJsonString = fs.readFileSync(packagePath).toString();
     if (packageJsonString.charCodeAt(0) === 0xFEFF) {
       packageJsonString = packageJsonString.substring(1, packageJsonString.length);
     }

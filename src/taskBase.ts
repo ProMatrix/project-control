@@ -91,28 +91,6 @@ export class TaskBase {
     return developerSettings;
   }
 
-  getNgWorkspace(): NgWorkspace {
-    if (!fs.existsSync(this.developersSettingsPath)) {
-      return new NgWorkspace();
-    }
-    const ds = this.getDeveloperSettings();
-    if (!ds) {
-      return new NgWorkspace();
-    }
-    const ngWorkspacePath = ds.appFolder + '\\angular.json';
-    if (!fs.existsSync(ngWorkspacePath)) {
-      return new NgWorkspace();
-    }
-
-    const s = fs.readFileSync(ngWorkspacePath);
-    const ngWorkspace = JSON.parse(fs.readFileSync(ngWorkspacePath).toString()) as NgWorkspace;
-    if (ngWorkspace) {
-      return ngWorkspace;
-    } else {
-      return new NgWorkspace();
-    }
-  }
-
   getBuildConfiguration(): BuildConfiguration {
     if (!fs.existsSync(this.developersSettingsPath)) {
       return new BuildConfiguration();
