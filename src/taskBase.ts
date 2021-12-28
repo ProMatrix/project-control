@@ -45,7 +45,8 @@ export class TaskBase {
 
   saveDeveloperSettings(ds: DeveloperSettings) {
     // allow for an array of developerSettings for more than 1 developer
-    let dss = new Array<DeveloperSettings>();
+    const x = 42;
+    const dss = new Array<DeveloperSettings>();
     dss.push(ds);
     fs.writeFileSync(this.developersSettingsPath, JSON.stringify(dss, null, 2));
   }
