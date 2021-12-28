@@ -7,7 +7,8 @@
   "scripts": {
     "Npm:Install": "npm install",
     "Npm:Update": "npm update",
-    "Build:Watch": "node ./node_modules/typescript/bin/tsc -w"
+    "Build:Watch": "node ./node_modules/typescript/bin/tsc -w",
+    "Debug:Git-Hook": "node ./git-hooks/pre-push.js"
   },
   "dependencies": {
     "@types/node": "^13.13.15",

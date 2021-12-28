@@ -7,10 +7,41 @@ This project contain helper tasks (utilities) for developing Angular application
 2) Publishing to NPM after committing to Git
 3) Base64 integration
 
-Before Debugging: Use Build:Watch to interactively make changes while debugging
+Before Debugging: Run Build:Watch to interactively make changes while debugging
 
 When do we need to run the ng-packagr?
 You only need to use the ng-packagr when creating a module that will be imported into an Angular application
 such as ngx-modelling
 
 taskNpmPublish: to test, make sure you have a local commit ready to be published
+if you don't want to publish, but just test the git-hook, you can change testOnly to true
+
+Note: before publishing, you need to log in...
+
+use: npm whoami
+to check if you are logged in...
+if not...
+
+make sure to setup: 2 factor authentication:
+https://docs.npmjs.com/configuring-two-factor-authentication
+
+then...
+use: npm login
+Username: david.donovan
+Password:
+Email: (this IS public) youtube3@promatrixinc.com
+npm notice Please check your email for a one-time password (OTP)
+Enter one-time password from your authenticator app: 48397922
+Logged in as david.donovan on https://registry.npmjs.org/.
+
+Ways to debug TaskNpmPublish:
+Debug: Debug:Git-Hook
+
+    "Debug:Git-Hook": "node ./git-hooks/pre-push.js"
+
+Launch: npm project-control
+
+    Make sure arguments are the same as in pre-push.ts
+
+To update project without invoking the publish...
+comment out the: const noop = new TaskNpmPublish(false, ... in the pre-push.ts file
