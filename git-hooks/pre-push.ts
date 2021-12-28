@@ -5,7 +5,7 @@ export class PrePush {
     constructor() {
       try {
       
-       // const noop = new TaskNpmPublish(false, 'project-control', 'npm', '..\\..\\NgResources\\project-control', '.\\', '.\\', '..\\..\\Angular.Studio.11.00\\studio.app,..\\..\\Angular.Studio.11.00\\studio.test', '');
+       const noop = new TaskNpmPublish(false, 'project-control', 'npm', '..\\..\\NgResources\\project-control', '.\\', '.\\', '..\\..\\Angular.Studio.11.00\\studio.app,..\\..\\Angular.Studio.11.00\\studio.test', '');
             // we can only see the console.log is the process.exit(1);
             
             // don't know if this works in VSCode
