@@ -2,7 +2,13 @@ import { ColoredLogger } from './coloredLogger';
 import { Versioning } from './versioning';
 import { CommonTasks } from './commonTasks';
 import { ProductionReady } from './productionReady';
-import { DeveloperSettings, VisualProject, BuildConfiguration, AngularProject, NgWorkspace } from '../../ngx-modelling';
+import {
+  DeveloperSettings,
+  VisualProject,
+  BuildConfiguration,
+  AngularProject,
+  NgWorkspace,
+} from '../../ngx-modelling';
 import { CommandLine } from './commandLine';
 import * as fs from 'fs-extra';
 import * as os from 'os';
@@ -29,62 +35,99 @@ export class TaskBase {
 
   // TODO remove later
   updateReleaseHtml(visualProject: VisualProject) {
-    const pathToReleaseTemplate = process.cwd() + "\\" + visualProject.name + "\\wwwroot\\dist\\release.template.html";
-    const pathToReleaseHtml = process.cwd() + "\\" + visualProject.name + "\\wwwroot\\dist\\release.html";
+    const pathToReleaseTemplate =
+      process.cwd() +
+      '\\' +
+      visualProject.name +
+      '\\wwwroot\\dist\\release.template.html';
+    const pathToReleaseHtml =
+      process.cwd() +
+      '\\' +
+      visualProject.name +
+      '\\wwwroot\\dist\\release.html';
     let releaseHtmlString = fs.readFileSync(pathToReleaseTemplate).toString();
-    releaseHtmlString = releaseHtmlString.replace(/dist-template/g, visualProject.developerSettings.serveApp);
+    releaseHtmlString = releaseHtmlString.replace(
+      /dist-template/g,
+      visualProject.developerSettings.serveApp
+    );
     fs.writeFileSync(pathToReleaseHtml, releaseHtmlString);
   }
 
-  // deprecate
-  getDevelopersSettings(visualProject: string): Array<DeveloperSettings> {
-    const developersettingsPath = process.cwd() + '\\' + visualProject + '\\developersSettings.json';
-    const developersSettings = JSON.parse(fs.readFileSync(developersettingsPath).toString()) as Array<DeveloperSettings>;
+  getDevelopersSettings() {
+    const developersSettings = JSON.parse(
+      fs.readFileSync(this.developersSettingsPath).toString()
+    );
+    if (!developersSettings) {
+      return null;
+    }
     return developersSettings;
   }
 
   saveDeveloperSettings(ds: DeveloperSettings) {
     // allow for an array of developerSettings for more than 1 developer
-    const x = 42;
-    const dss = new Array<DeveloperSettings>();
-    dss.push(ds);
-    fs.writeFileSync(this.developersSettingsPath, JSON.stringify(dss, null, 2));
+    const developersSettings = this.getDevelopersSettings();
+    const developerSettingsToUpdate = developersSettings.find(
+      (x) => x.machineName === os.hostname()
+    );
+    const inx = developersSettings.indexOf(developerSettingsToUpdate);
+    developersSettings.splice(inx, 1, ds); // replace developerSettings
+    fs.writeFileSync(
+      this.developersSettingsPath,
+      JSON.stringify(developersSettings, null, 2)
+    );
   }
 
-  saveDevelopersSettings(visualProject: string, developersSettings: Array<DeveloperSettings>) {
-    const developersettingsPath = process.cwd() + '\\' + visualProject + '\\developersSettings.json';
-    fs.writeFileSync(developersettingsPath, JSON.stringify(developersSettings, null, 2));
+  saveDevelopersSettings(
+    visualProject: string,
+    developersSettings: Array<DeveloperSettings>
+  ) {
+    const developersettingsPath =
+      process.cwd() + '\\' + visualProject + '\\developersSettings.json';
+    fs.writeFileSync(
+      developersettingsPath,
+      JSON.stringify(developersSettings, null, 2)
+    );
   }
 
   getAngularJson(visualProject: string): any {
-    const angularJsonPath = process.cwd() + '\\' + visualProject + '\\wwwroot\\angular.json';
+    const angularJsonPath =
+      process.cwd() + '\\' + visualProject + '\\wwwroot\\angular.json';
     const angularJson = JSON.parse(fs.readFileSync(angularJsonPath).toString());
     return angularJson;
   }
 
   saveAngularJson(visualProject: string, angularJson: any) {
-    const angularJsonPath = process.cwd() + '\\' + visualProject + '\\wwwroot\\angular.json';
+    const angularJsonPath =
+      process.cwd() + '\\' + visualProject + '\\wwwroot\\angular.json';
     fs.writeFileSync(angularJsonPath, JSON.stringify(angularJson, null, 2));
   }
 
   getPackageJson(visualProject: string): any {
-    const packageJsonPath = process.cwd() + '\\' + visualProject + '\\wwwroot\\package.json';
+    const packageJsonPath =
+      process.cwd() + '\\' + visualProject + '\\wwwroot\\package.json';
     const packageJsonString = fs.readFileSync(packageJsonPath).toString();
     const packageJson = JSON.parse(packageJsonString);
     return packageJson;
   }
 
   savePackageJson(visualProject: string, packageJson: any) {
-    const packageJsonPath = process.cwd() + '\\' + visualProject + '\\wwwroot\\package.json';
+    const packageJsonPath =
+      process.cwd() + '\\' + visualProject + '\\wwwroot\\package.json';
     fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
   }
 
   getDeveloperSettings(): DeveloperSettings | null {
-    const developersSettings = JSON.parse(fs.readFileSync(this.developersSettingsPath).toString()) as Array<DeveloperSettings>;
-    let developerSettings = developersSettings.find(x => (x.machineName === os.hostname()));
+    const developersSettings = JSON.parse(
+      fs.readFileSync(this.developersSettingsPath).toString()
+    ) as Array<DeveloperSettings>;
+    let developerSettings = developersSettings.find(
+      (x) => x.machineName === os.hostname()
+    );
 
     if (!developerSettings) {
-      developerSettings = developersSettings.find(x => (x.machineName === 'ANONYMOUS DEVELOPERS MACHINE NAME'));
+      developerSettings = developersSettings.find(
+        (x) => x.machineName === 'ANONYMOUS DEVELOPERS MACHINE NAME'
+      );
     }
     if (!developerSettings) {
       return null;
@@ -97,30 +140,36 @@ export class TaskBase {
       return new BuildConfiguration();
     }
 
-    const bc: BuildConfiguration = { machineName: os.hostname(), visualProject: new VisualProject() };
-    const developersSettings = JSON.parse(fs.readFileSync(this.developersSettingsPath).toString()) as Array<DeveloperSettings>;
+    const bc: BuildConfiguration = {
+      machineName: os.hostname(),
+      visualProject: new VisualProject(),
+    };
+    const developersSettings = JSON.parse(
+      fs.readFileSync(this.developersSettingsPath).toString()
+    ) as Array<DeveloperSettings>;
     const developerSettings = this.getDeveloperSettings();
 
     if (developerSettings) {
       let name = process.cwd();
       if (name.indexOf('\\') !== -1) {
         name = name.substr(0, name.lastIndexOf('\\'));
-      } else { // MacOs
+      } else {
+        // MacOs
         name = name.substr(0, name.lastIndexOf('/'));
       }
       bc.visualProject = {
         name,
         developerSettings,
         showPanel: false,
-        showVersion: true
-      }
+        showVersion: true,
+      };
     }
     return bc;
   }
 
   findValueOf(arg: string): string {
     try {
-      return process.argv.filter(x => x.indexOf(arg) !== -1)[0].split('=')[1];
+      return process.argv.filter((x) => x.indexOf(arg) !== -1)[0].split('=')[1];
     } catch (e) {
       return '';
     }
@@ -128,7 +177,9 @@ export class TaskBase {
 
   getCommandArg(arg: string, defaultString: string): string {
     try {
-      return process.argv.filter(x => x.indexOf(arg + '=') !== -1)[0].split('=')[1];
+      return process.argv
+        .filter((x) => x.indexOf(arg + '=') !== -1)[0]
+        .split('=')[1];
     } catch (e) {
       return defaultString;
     }
@@ -146,8 +197,9 @@ export class TaskBase {
   }
 
   getNpmVersionNo(npmPackage: string): string {
-
-    let versionOnNpm = this.cli.executeSync('npm info ' + npmPackage + ' version');
+    let versionOnNpm = this.cli.executeSync(
+      'npm info ' + npmPackage + ' version'
+    );
     if (versionOnNpm.length > 0) {
       let delimiterIndex = versionOnNpm.length - 1;
       versionOnNpm = versionOnNpm.substr(0, versionOnNpm.length - 1);
@@ -156,7 +208,9 @@ export class TaskBase {
   }
 
   getLocalVersionNo(npmPackage: string): string {
-    let versionOnNpm = this.cli.executeSync('npm show ' + npmPackage + ' version');
+    let versionOnNpm = this.cli.executeSync(
+      'npm show ' + npmPackage + ' version'
+    );
     if (versionOnNpm.length > 0) {
       let delimiterIndex = versionOnNpm.length - 1;
       versionOnNpm = versionOnNpm.substr(0, versionOnNpm.length - 1);
