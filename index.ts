@@ -8,3 +8,4 @@ export * from './src/productionReady';
 export * from './src/taskNpmPublish';
 export * from './src/objectStorage';
 export * from './src/versioning';
+export * from './src/appVersions';

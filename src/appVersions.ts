@@ -1,5 +1,5 @@
 export class AppVersions {
-  buildVersion = "";
+  buildVersion = "3333333";
   typeScript = "";
   nodeJs = "";
   v8Engine = "";
