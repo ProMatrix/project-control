@@ -1,12 +1,11 @@
 {
-  "name": "project-control",
+  "name": "ngx-vsc-extension",
   "version": "0.0.44",
-  "description": "project-control is a group of tasks used in the creation of an Angular app",
+  "description": "ngx-vsc-extension is a group of tasks used in the creation of a VSCode extension",
   "author": "David Donovan",
   "license": "MIT",
   "scripts": {
     "Npm:Install": "npm install",
-    "Npm:Update": "npm update",
     "Build:Watch": "node ./node_modules/typescript/bin/tsc -w",
     "Debug:Git-Hook": "node ./git-hooks/pre-push.js"
   },
